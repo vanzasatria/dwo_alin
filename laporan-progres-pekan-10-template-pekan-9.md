@@ -20,7 +20,6 @@
 | Merancang OLAP Cube beserta dimension, hierarki, measures, dan calculated member. | Selesai pada tahap desain | [Desain OLAP Cube](../04-olap/cube-design.md) |
 | Membuat wireframe dashboard untuk menjawab lima Business Questions. | Selesai pada tahap wireframe | [Dokumentasi Wireframe Dashboard](../05-dashboard/dashboard-wireframe.md) dan [Wireframe Dashboard PNG](../05-dashboard/dashboard-wireframe.png) |
 | Menginstal dan menjalankan Pentaho Data Integration Community Edition 9.4. | Selesai | PDI CE 9.4.0.0-343 berhasil dibuka melalui Spoon. [Bukti Spoon](../04-olap/pentaho-testing/01-spoon-interface.png) |
-| Menghubungkan Pentaho dengan PostgreSQL database adventureworks. | Selesai | Koneksi PostgreSQL berhasil digunakan pada step Table Input. [Bukti koneksi PostgreSQL](../04-olap/pentaho-testing/02-postgresql-connection.png) |
 | Menjalankan query sederhana menggunakan Table Input. | Selesai | Query transaksi online berhasil dijalankan dan Preview Data menampilkan data. [Bukti Table Input dan hasil query](../04-olap/pentaho-testing/03-table-input-query-result.png) |
 | Mengimplementasikan seluruh proses ETL untuk dimension dan fact. | Belum dilakukan | Menjadi pekerjaan lanjutan setelah pengujian koneksi dasar Pentaho. |
 | Mengonfigurasi OLAP Cube pada Mondrian dan menguji query MDX. | Belum dilakukan | Desain cube telah tersedia; konfigurasi dan pengujian implementasi belum dilakukan. |
