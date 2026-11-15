@@ -16,16 +16,16 @@
 | Target Pekan Ini | Status | Bukti / Keterangan |
 |---|---|---|
 | Memasang dan memeriksa `dim_tanggal` sesuai skrip standar dosen. | Selesai | Tabel berisi 2.192 baris, termasuk anggota unknown dengan `tanggal_key = -1`; rentang tanggal kalender 2010-01-01 sampai 2015-12-31. |
-| Menyusun dan menjalankan `sql/ddl.sql` untuk tabel Data Warehouse. | Selesai pada tahap pengujian import | Skrip berhasil dijalankan dua kali. Jumlah baris dan anggota unknown tidak bertambah pada import kedua. |
-| Menguji idempotensi import DDL. | Selesai pada tahap verifikasi data | Hasil pemeriksaan setelah import pertama dan kedua menunjukkan jumlah data tetap. Catatan: verifikasi ini memastikan data tidak terduplikasi; belum membuktikan bahwa `CREATE TABLE IF NOT EXISTS` memperbarui struktur tabel yang sudah ada. |
-| Menguji Primary Key. | Selesai | Percobaan memasukkan `sales_order_detail_id` duplikat menghasilkan error duplicate entry. |
-| Menguji Foreign Key. | Selesai | Percobaan memasukkan `product_key` yang tidak tersedia pada `dim_product` ditolak oleh constraint foreign key. |
-| Menguji Unique Key. | Selesai | Percobaan memasukkan `currency_code = 'UNK'` yang sudah ada ditolak oleh constraint unique. |
+| Menyusun dan menjalankan `sql/ddl.sql` untuk tabel Data Warehouse. | Selesai pada tahap pengujian import | [Import ddl.sql](../06-database/evidence-pekan11/import_idl_pertama.png) Skrip berhasil dijalankan dua kali [Import ddl.sql Kedua](../06-database/evidence-pekan11/import_ddl_kedua.png). Jumlah baris dan anggota unknown tidak bertambah pada import kedua. |
+| Menguji idempotensi import DDL. | Selesai pada tahap verifikasi data |[Menguji idempotensi](../06-database/evidence-pekan11/verifikasi_idempotensi.png) Hasil pemeriksaan setelah import pertama dan kedua menunjukkan jumlah data tetap. Catatan: verifikasi ini memastikan data tidak terduplikasi; belum membuktikan bahwa `CREATE TABLE IF NOT EXISTS` memperbarui struktur tabel yang sudah ada. |
+| Menguji Primary Key. | Selesai | [Menguji Primary Key](../06-database/evidence-pekan11/uji_primery_key.png) Percobaan memasukkan `sales_order_detail_id` duplikat menghasilkan error duplicate entry. |
+| Menguji Foreign Key. | Selesai | [Menguji idempotensi](../06-database/evidence-pekan11/uji_foreign_key.png)Percobaan memasukkan `product_key` yang tidak tersedia pada `dim_product` ditolak oleh constraint foreign key. |
+| Menguji Unique Key. | Selesai |[Menguji idempotensi](../06-database/evidence-pekan11/uji_unique_key.png) Percobaan memasukkan `currency_code = 'UNK'` yang sudah ada ditolak oleh constraint unique. |
 | Membersihkan data sementara hasil pengujian constraint. | Selesai | Data percobaan dihapus; pemeriksaan akhir menunjukkan `dim_currency` memiliki satu baris anggota unknown dan `fact_online_sales` kembali kosong. |
-| Menyusun kamus data seluruh tabel DW. | Selesai pada tahap dokumentasi | Dokumen `docs/kamus-data.md` disiapkan. Tipe dan panjang data perlu dicocokkan kembali dengan struktur aktual sebelum finalisasi. |
-| Melakukan reverse engineering ERD dari database aktual. | Selesai | ERD dibuat melalui DBeaver dan menampilkan satu fact table serta enam dimension yang terhubung. |
+| Menyusun kamus data seluruh tabel DW. | Selesai pada tahap dokumentasi | [Kamus Data](../03-data-model/kamus-data.md) Dokumen `docs/kamus-data.md` disiapkan. Tipe dan panjang data perlu dicocokkan kembali dengan struktur aktual sebelum finalisasi. |
+| Melakukan reverse engineering ERD dari database aktual. | Selesai | [ERD](../06-database/evidence-pekan11/erd_dw_kelompok_5.png)ERD dibuat melalui DBeaver dan menampilkan satu fact table serta enam dimension yang terhubung. |
 | Membandingkan ERD dengan Star Schema V2. | Selesai pada pemeriksaan visual | Struktur ERD menunjukkan `fact_online_sales` terhubung dengan `dim_tanggal`, `dim_product`, `dim_customer`, `dim_territory`, `dim_promotion`, dan `dim_currency`. |
-| Menambahkan daftar staging table pada Source-to-Target Mapping. | Selesai pada tahap dokumentasi | Dokumen mapping revisi memuat rancangan `stg_product`, `stg_customer`, `stg_territory`, `stg_promotion`, `stg_currency`, dan `stg_online_sales`. Nama tersebut masih berupa rancangan, bukan tabel fisik yang telah dibuat. |
+| Menambahkan daftar staging table pada Source-to-Target Mapping. | Selesai pada tahap dokumentasi | [Update Staging](../03-data-model/source-to-target-mapping-pekan-11-revisi.md)Dokumen mapping revisi memuat rancangan `stg_product`, `stg_customer`, `stg_territory`, `stg_promotion`, `stg_currency`, dan `stg_online_sales`. Nama tersebut masih berupa rancangan, bukan tabel fisik yang telah dibuat. |
 | Membangun tabel staging dan workflow ETL di Pentaho. | Belum dilakukan | Implementasi staging dan transformation/job Pentaho belum dimulai. |
 | Memuat data dimension dan fact ke Data Warehouse. | Belum dilakukan | Seluruh proses load masih menjadi pekerjaan lanjutan. |
 | Mengonfigurasi Mondrian dan menguji query MDX. | Belum dilakukan | Desain OLAP Cube telah tersedia, tetapi implementasi belum dilakukan. |
@@ -131,13 +131,12 @@ Belum tersedia informasi terverifikasi mengenai kendala koordinasi, komunikasi, 
 
 | Nama | Peran | Pekerjaan Pekan Ini | Bukti |
 |---|---|---|---|
-| Afiana Nurani | Project Manager | Perlu dikonfirmasi oleh anggota terkait. | Belum dicantumkan |
-| Vernanda Pramudya Sejati | ETL Developer | Perlu dikonfirmasi; implementasi staging dan ETL Pentaho belum dimulai. | Belum dicantumkan |
-| Zyndi Auralia Wibowo | Data Modeler | Perlu dikonfirmasi; pekerjaan kelompok mencakup pemeriksaan struktur DW, ERD, dan dokumentasi mapping. | Belum dicantumkan |
-| Reva Luvika Apriliani | OLAP Developer | Perlu dikonfirmasi oleh anggota terkait. | Belum dicantumkan |
-| Caroline Febryanty | Dashboard Developer | Perlu dikonfirmasi oleh anggota terkait. | Belum dicantumkan |
+| Afiana Nurani | Project Manager | Mengkoordinasikan seluruh pekerjaan, memantau progres anggota, memastikan seluruh tugas Pekan 11 selesai, mengumpulkan bukti screenshot, dan menyusun laporan progres Pekan 12. | Belum dicantumkan |
+| Vernanda Pramudya Sejati | ETL Developer | Menyiapkan dan menjalankan ddl.sql, menguji import DDL dua kali, melakukan pengujian constraint (Primary Key, Foreign Key, Unique Key), serta memastikan data pengujian dibersihkan kembali. | [Bukti commit ddl.sql dan pengujiannya](Laporan_pekan11_assets/bukti-commit-vernanda.png) |
+| Zyndi Auralia Wibowo | Data Modeler | Memeriksa struktur dim_tanggal, memastikan kesesuaian seluruh tabel dengan Star Schema V2, melakukan reverse engineering ERD menggunakan DBeaver, dan memperbarui Source-to-Target Mapping termasuk daftar staging table. | [Bukti commit memerika dim_tanggal dan reverse engineering ERD](Laporan_pekan11_assets/bukti-commit-zyndi.png)  |
+| Reva Luvika Apriliani | OLAP Developer | Memeriksa keterkaitan tabel fact dan dimension terhadap kebutuhan OLAP Cube, memastikan hierarki waktu menggunakan dim_tanggal, serta meninjau kesesuaian struktur tabel dengan desain OLAP. | Belum dicantumkan |
+| Caroline Febryanty | Dashboard Developer | Memeriksa kesesuaian struktur dimensi dengan kebutuhan visualisasi dashboard, memperbarui dokumentasi kamus data bersama Data Modeler, serta menyiapkan dokumentasi dan bukti pendukung dashboard. | Belum dicantumkan |
 
-> **Catatan:** Tabel kontribusi tidak boleh dianggap sebagai catatan aktivitas final sebelum masing-masing anggota mengonfirmasi pekerjaan yang benar-benar dilakukan.
 
 ---
 
