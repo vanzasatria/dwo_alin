@@ -149,10 +149,9 @@ Lampiran yang perlu dimasukkan ke repository:
 3. Screenshot pengujian Primary Key.
 4. Screenshot pengujian Foreign Key.
 5. Screenshot pengujian Unique Key.
-6. Screenshot hasil cleanup data pengujian.
-7. Screenshot ERD reverse engineering dari DBeaver.
-8. Dokumen `docs/kamus-data.md`.
-9. Dokumen Source-to-Target Mapping revisi yang memuat daftar staging.
+6. Screenshot ERD reverse engineering dari DBeaver.
+7. Dokumen `kamus-data.md`.
+8. Dokumen Source-to-Target Mapping revisi yang memuat daftar staging.
 
 Pastikan semua file bukti benar-benar tersedia. Gunakan tautan relatif sesuai struktur folder repository kelompok.
 
