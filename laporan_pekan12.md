@@ -20,7 +20,7 @@
 | Menguji idempotensi import DDL. | Selesai pada tahap verifikasi data |[Menguji idempotensi](../06-database/evidence-pekan11/verifikasi_idempotensi.png) Hasil pemeriksaan setelah import pertama dan kedua menunjukkan jumlah data tetap. Catatan: verifikasi ini memastikan data tidak terduplikasi; belum membuktikan bahwa `CREATE TABLE IF NOT EXISTS` memperbarui struktur tabel yang sudah ada. |
 | Menguji Primary Key. | Selesai | [Menguji Primary Key](../06-database/evidence-pekan11/uji_primery_key.png) Percobaan memasukkan `sales_order_detail_id` duplikat menghasilkan error duplicate entry. |
 | Menguji Foreign Key. | Selesai | [Menguji idempotensi](../06-database/evidence-pekan11/uji_foreign_key.png)Percobaan memasukkan `product_key` yang tidak tersedia pada `dim_product` ditolak oleh constraint foreign key. |
-| Menguji Unique Key. | Selesai |[Menguji idempotensi](../06-database/evidence-pekan11/uji_unique_key.png) Percobaan memasukkan `currency_code = 'UNKOWN'` yang sudah ada ditolak oleh constraint unique. |
+| Menguji Unique Key. | Selesai |[Menguji idempotensi](../06-database/evidence-pekan11/uji_unique_key.png) Percobaan memasukkan `currency_code = 'UNKNOWN'` yang sudah ada ditolak oleh constraint unique. |
 | Membersihkan data sementara hasil pengujian constraint. | Selesai | Data percobaan dihapus; pemeriksaan akhir menunjukkan `dim_currency` memiliki satu baris anggota unknown dan `fact_online_sales` kembali kosong. |
 | Menyusun kamus data seluruh tabel DW. | Selesai pada tahap dokumentasi | [Kamus Data](../03-data-model/kamus-data.md) Dokumen `docs/kamus-data.md` disiapkan. Tipe dan panjang data perlu dicocokkan kembali dengan struktur aktual sebelum finalisasi. |
 | Melakukan reverse engineering ERD dari database aktual. | Selesai | [ERD](../06-database/evidence-pekan11/erd_dw_kelompok_5.png)ERD dibuat melalui DBeaver dan menampilkan satu fact table serta enam dimension yang terhubung. |
@@ -63,7 +63,7 @@ Struktur Data Warehouse `dw_kelompok_5` terdiri dari tujuh tabel:
 |---|---|---|
 | Primary Key | Memasukkan `sales_order_detail_id` yang sama dua kali | Ditolak: duplicate entry |
 | Foreign Key | Memasukkan `product_key` yang tidak tersedia pada dimension | Ditolak: foreign key constraint fails |
-| Unique Key | Memasukkan `currency_code = 'UNKOWN'` yang sudah digunakan | Ditolak: duplicate entry |
+| Unique Key | Memasukkan `currency_code = 'UNKNOWN'` yang sudah digunakan | Ditolak: duplicate entry |
 
 **Catatan:** Data uji telah dibersihkan setelah pengujian. Fact table kembali kosong dan anggota unknown pada dimensi mata uang tetap satu baris.
 
