@@ -3,7 +3,7 @@
 **Kelompok:** Kelompok 5  
 **Proses bisnis:** Online Sales  
 **Database sumber:** MySQL `adventureworks`  
-**Database Data Warehouse:** MariaDB `dw_kelompok_5`  
+**Database Data Warehouse:** MyDSQL `dw_kelompok_5`  
 **ETL Tool:** Pentaho Data Integration Community Edition 9.4.0.0-343  
 **Status:** Kuning
 
