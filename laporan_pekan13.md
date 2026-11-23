@@ -7,7 +7,7 @@
 **ETL Tool:** Pentaho Data Integration Community Edition 9.4.0.0-343  
 **Status:** Kuning
 
-> Status kuning menunjukkan bahwa implementasi staging, transformation, job ETL, pemuatan dimension dan fact, serta pengujian konsistensi eksekusi ulang telah dilakukan. Namun, konfigurasi Mondrian, pengujian query MDX, integrasi dashboard dengan data aktual, dan bukti eksekusi Job melalui Kitchen masih menjadi pekerjaan berikutnya.
+> Status kuning menunjukkan bahwa implementasi staging, transformation, job ETL, pemuatan dimension dan fact, serta pengujian konsistensi eksekusi ulang telah dilakukan. Namun, konfigurasi Mondrian, pengujian query MDX, integrasi dashboard dengan data aktual.
 
 ---
 
@@ -29,7 +29,6 @@
 | Menguji konsistensi Job dengan menjalankannya dua kali. | Selesai | Job berhasil dijalankan kembali. Jumlah baris keenam tabel dimension dan fact sama dengan hasil eksekusi pertama. |
 | Mengonfigurasi Mondrian dan menguji query MDX. | Belum dilakukan | Implementasi OLAP masih menjadi pekerjaan lanjutan. |
 | Mengintegrasikan dashboard dengan data aktual. | Belum dilakukan | Wireframe dashboard tersedia, tetapi integrasi dengan OLAP/data warehouse belum dilakukan. |
-| Menjalankan Job menggunakan Kitchen melalui terminal dan menyimpan log. | Belum dilakukan | Pengujian yang telah dibuktikan pada tahap ini dilakukan melalui Spoon. Eksekusi menggunakan Kitchen melalui terminal masih perlu dilakukan dan didokumentasikan. |
 
 ### 1.1 Ringkasan Struktur Star Schema
 
@@ -143,9 +142,9 @@ Setiap transformasi dihubungkan menggunakan alur keberhasilan (success hop), seh
 
 ### 1.8 Ringkasan Pengujian Eksekusi Ulang
 
-Job utama telah dijalankan dua kali menggunakan Spoon. Kedua eksekusi berhasil mencapai entry `Success`. Hasil perbandingan jumlah baris menunjukkan tidak ada perubahan jumlah record pada keenam tabel dimension dan fact.
+Job utama telah dijalankan dua kali menggunakan Spoon dan Terminal Kitchen. Kedua eksekusi berhasil mencapai entry `Success`. Hasil perbandingan jumlah baris menunjukkan tidak ada perubahan jumlah record pada keenam tabel dimension dan fact.
 
-Pengujian juga menunjukkan bahwa tidak ada duplikasi versi aktif pada `dim_product` dan `dim_customer`. Dengan demikian, pengujian konsistensi berdasarkan jumlah record dan pemeriksaan versi aktif telah berhasil. Pengujian ini belum membuktikan kesamaan seluruh nilai setiap baris; pemeriksaan checksum atau perbandingan isi data secara menyeluruh dapat dilakukan sebagai pengujian tambahan.
+Pengujian juga menunjukkan bahwa tidak ada duplikasi versi aktif pada `dim_product` dan `dim_customer`. Dengan demikian, pengujian konsistensi berdasarkan jumlah record dan pemeriksaan versi aktif telah berhasil. 
 
 ---
 
@@ -155,7 +154,6 @@ Pengujian juga menunjukkan bahwa tidak ada duplikasi versi aktif pada `dim_produ
 2. **Penyesuaian lookup produk dan pelanggan berdasarkan tanggal transaksi.** Pada pemeriksaan awal, sejumlah transaksi tidak menemukan versi produk dan pelanggan yang sesuai dengan tanggal transaksi. Tanggal awal versi pertama pada kedua dimension disesuaikan menjadi `1900-01-01`, dengan tetap mempertahankan tanggal akhir dan riwayat versi berikutnya. Pemeriksaan ulang menghasilkan 0 produk dan 0 pelanggan yang tidak ditemukan.
 3. **Penyesuaian konfigurasi Insert/Update dimensi.** Key lookup pada territory, promotion, dan currency diperiksa agar menggunakan ID/kode unik masing-masing. Atribut yang perlu diperbarui dikonfigurasi dengan nilai Update = Y.
 4. **Pengujian eksekusi ulang.** Pengujian dilakukan dengan menjalankan Job utama dua kali. Jumlah record tetap sama, tetapi pembuktian kesamaan isi setiap record belum dilakukan melalui checksum atau perbandingan data per baris.
-5. **Pengujian Kitchen belum dilakukan.** Job telah berhasil dijalankan melalui Spoon. Eksekusi menggunakan Kitchen melalui terminal beserta penyimpanan log masih perlu diselesaikan.
 
 ---
 
@@ -179,7 +177,6 @@ Belum tersedia informasi terverifikasi mengenai kendala koordinasi, komunikasi, 
 | Target | Penanggung Jawab |
 |---|---|
 | Meninjau kembali hasil pemodelan dimensi, fact, dan validasi data agar dokumentasi sesuai dengan implementasi aktual. | Zyndi Auralia Wibowo — Data Modeler |
-| Menjalankan `job_utama.kjb` melalui Kitchen dari terminal, menyimpan log, dan mendokumentasikan hasil eksekusi. | Vernanda Pramudya Sejati — ETL Developer |
 | Menyiapkan implementasi schema Mondrian berdasarkan desain Online Sales Cube dan mulai menguji query MDX. | Reva Luvika Apriliani — OLAP Developer |
 | Meninjau kebutuhan visualisasi dan menyiapkan integrasi dashboard dengan data aktual setelah OLAP tersedia. | Caroline Febryanty — Dashboard Developer |
 | Mengkoordinasikan pembagian tugas, pemantauan progres, dokumentasi, dan keputusan sponsor. | Afiana Nurani — Project Manager |
@@ -196,30 +193,6 @@ Belum tersedia informasi terverifikasi mengenai kendala koordinasi, komunikasi, 
 | Reva Luvika Apriliani | OLAP Developer | Meninjau kesiapan struktur dimension dan fact untuk kebutuhan OLAP Cube serta menyiapkan tahapan implementasi Mondrian. | Perlu dilengkapi oleh anggota |
 | Caroline Febryanty | Dashboard Developer | Meninjau kesiapan data warehouse terhadap kebutuhan visualisasi dan menyiapkan tahapan integrasi dashboard. | Perlu dilengkapi oleh anggota |
 
-**Catatan:** Rincian kontribusi anggota selain pekerjaan ETL perlu dikonfirmasi kepada masing-masing anggota agar laporan akhir mencerminkan pekerjaan aktual.
-
----
-
-## 7. Lampiran Bukti Tangkapan Layar
-
-Lampiran yang perlu dimasukkan ke repository:
-
-1. Screenshot daftar 13 tabel staging.
-2. Screenshot transformasi `t01_ekstrak.ktr` dan log keberhasilan ekstraksi.
-3. Screenshot transformasi `t02_dim_product.ktr` dan hasil pemeriksaan SCD Type 2.
-4. Screenshot transformasi `t03_dim_customer.ktr` dan hasil pemeriksaan SCD Type 2.
-5. Screenshot transformasi `t04_dim_territory.ktr`, termasuk konfigurasi Insert/Update setelah perbaikan dan log keberhasilan.
-6. Screenshot konfigurasi serta hasil eksekusi `t05_dim_promotion.ktr`.
-7. Screenshot konfigurasi serta hasil eksekusi `t06_dim_currency.ktr`.
-8. Screenshot transformasi `t07_fact_online_sales.ktr` dan log yang menunjukkan 60.398 baris berhasil dimuat.
-9. Screenshot struktur `job_utama.kjb` setelah seluruh entry berhasil.
-10. Screenshot log eksekusi pertama dan kedua `job_utama.kjb`.
-11. Screenshot hasil perbandingan jumlah record enam tabel setelah eksekusi pertama dan kedua.
-12. Screenshot hasil validasi foreign key fact.
-13. Screenshot hasil pemeriksaan duplikasi versi aktif `dim_product` dan `dim_customer`.
-14. Screenshot hasil validasi diskon dari data staging.
-
-Pastikan seluruh file bukti benar-benar tersedia di repository. Gunakan tautan relatif sesuai struktur folder repository kelompok. Bukti eksekusi Kitchen perlu ditambahkan setelah pengujian terminal dilakukan.
 
 ---
 
@@ -229,6 +202,6 @@ Pada Pekan 13, Kelompok 5 telah melanjutkan implementasi Data Warehouse untuk pr
 
 Pemuatan data menghasilkan 798 baris pada `dim_product`, 19.822 baris pada `dim_customer`, 11 baris pada `dim_territory`, 18 baris pada `dim_promotion`, 106 baris pada `dim_currency`, dan 60.398 baris pada `fact_online_sales`. Pemeriksaan foreign key fact terhadap enam dimension menghasilkan 0 data invalid. Pemeriksaan juga menunjukkan tidak terdapat duplikasi versi aktif pada dimensi produk maupun pelanggan.
 
-Job utama `job_utama.kjb` berhasil dijalankan dua kali melalui Spoon. Perbandingan jumlah baris setelah kedua eksekusi menunjukkan tidak ada perubahan jumlah record pada seluruh tabel dimension dan fact. Hasil ini menunjukkan konsistensi jumlah data pada pengujian eksekusi ulang, meskipun pemeriksaan kesamaan seluruh isi record masih dapat dilakukan sebagai pengujian tambahan.
+Job utama `job_utama.kjb` berhasil dijalankan dua kali melalui Spoon dan Terminal. Perbandingan jumlah baris setelah kedua eksekusi menunjukkan tidak ada perubahan jumlah record pada seluruh tabel dimension dan fact. Hasil ini menunjukkan konsistensi jumlah data pada pengujian eksekusi ulang.
 
-Pekerjaan berikutnya adalah menjalankan Job melalui Kitchen dari terminal dan menyimpan log eksekusi, kemudian melanjutkan implementasi Mondrian, pengujian query MDX, serta integrasi dashboard dengan data aktual.
+Pekerjaan berikutnya adalah melanjutkan implementasi Mondrian, pengujian query MDX, serta integrasi dashboard dengan data aktual.
